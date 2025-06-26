@@ -183,4 +183,6 @@ Gerçek zamanlı teslimat durumu izlemek isteseydik, bu sistem WebSocket veya MQ
 - [GraphQL vs REST – Apollo Blog](https://www.apollographql.com/blog/graphql-vs-rest/)
 - [6 Common Ways To Build APIs](https://blog.amigoscode.com/p/6-common-ways-to-build-apis)
 - [API Development Roadmap For Developers](https://blog.amigoscode.com/p/api-development-roadmap-for-developers)
+- [HTTP Durum Kodları](https://boosmart.com/http-durum-kodlari-nedir-seo-icin-neden-onemlidir/)
+- [Publish/Subscribe](https://aws.amazon.com/tr/what-is/pub-sub-messaging/)
   
