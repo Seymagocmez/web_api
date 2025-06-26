@@ -1,4 +1,4 @@
-# Web API && HTTP'nin Temelleri 
+# Web API & HTTP'nin Temelleri 
 
 Uygulamalar arası veri iletişimi günümüz yazılım dünyasının temel taşlarından biridir. Bu iletişim, genellikle **Web API**'ler aracılığıyla sağlanır. 
 
@@ -6,15 +6,11 @@ Web API, farklı yazılım uygulamalarının internet üzerinden iletişim kurma
 
 Web API'lerin altında yatan protokol ise çoğu zaman **HTTP**’dir. HTTP sadece sayfa yüklemeleriyle sınırlı kalmaz, aynı zamanda API çağrılarında da yoğun olarak kullanılır.
 
-Modern uygulamalarda sıkça kullanılan Web API tasarım yaklaşımlarını aşağıdaki hareketli resimden inceleyebilirsiniz. 
-
-![API_TYPES](https://github.com/user-attachments/assets/602e31ae-1d4e-4a66-945e-c2bfd78e1886)
-
 ## 1. HTTP Temelleri
 
 HTTP (HyperText Transfer Protocol), web üzerindeki istemci ve sunucu arasında veri alışverişini sağlayan bir iletişim protokolüdür. Uygulama katmanında (Application Layer) çalışır ve İnternet protokolü (IP) üzerinde taşınan verilerin nasıl iletileceğini belirler. HTTP, istemcinin (genellikle web tarayıcısı veya API istemcisi) sunucuya istek göndermesini ve sunucunun da bu isteğe karşılık yanıt vermesini sağlar. Web sayfalarının, API verilerinin ve diğer kaynakların transferinde en yaygın kullanılan protokoldür.
 
-> Uygulama katmanıyla ilgili bu yazıyı okuyabilirsiniz.
+> Uygulama katmanıyla ilgili [bu](https://github.com/Seymagocmez/communication_protocols?tab=readme-ov-file#uygulama-katman%C4%B1-application-layer) yazıyı okuyabilirsiniz.
 
 ### HTTP Sürümleri
 
@@ -58,7 +54,9 @@ HTTP (HyperText Transfer Protocol), web üzerindeki istemci ve sunucu arasında 
 
 ## 3. Web API Türleri ve Bazı Mimariler
 
-Modern web sistemleri için farklı ihtiyaçlara yönelik çeşitli protokoller vardır:
+![API_TYPES](https://github.com/user-attachments/assets/602e31ae-1d4e-4a66-945e-c2bfd78e1886)
+
+Modern web sistemleri için farklı ihtiyaçlara yönelik çeşitli seçenekler bulunur. 
 
 ### REST (Representational State Transfer)
 
@@ -148,4 +146,41 @@ Client → Function → Response
 | MQTT        | TCP          | IoT cihazları, sensörler            | Serbest      |
 | Serverless  | HTTP/Event   | Anlık, tetiklenen işlemler          | JSON         |
 
+## Gerçek Uygulamalardan Bir Senaryo: 
 ---
+Bir e-ticaret uygulamasında, kullanıcıların siparişlerini takip edebileceği bir sistem düşünelim. Bu sistemde:
+
+- Kullanıcı mobil uygulamadan sipariş durumunu sorgular.
+
+- Mobil uygulama, bir REST API kullanarak şu isteği gönderir:
+  
+```proto
+GET /api/orders/12345
+```
+- Sunucu, application/json formatında siparişin mevcut durumunu (Hazırlanıyor, Kargoya verildi, Teslim edildi gibi) döner.
+
+- Fakat kullanıcı, yalnızca sipariş durumu ve tahmini teslim tarihi ile ilgilenirken, API cevabında tüm ürün detayları, fatura bilgisi ve stok verisi de yer alır. Bu durumda:
+
+- Bu gereksiz veri transferi, overfetching problemine yol açar. Hem istemcinin belleği hem de ağ kaynakları boşa harcanır.
+
+- Alternatif olarak, GraphQL tercih edilseydi istemci sadece ihtiyacı olan alanları çekebilirdi:
+
+```proto
+query {
+  order(id: "12345") {
+    status
+    estimatedDelivery
+  }
+}
+```
+
+Gerçek zamanlı teslimat durumu izlemek isteseydik, bu sistem WebSocket veya MQTT ile entegre edilerek anlık bildirimlerle daha interaktif hale getirilebilirdi.
+
+## Kaynaklar
+
+- [MDN Web Docs – HTTP Overview](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)
+- [Postman API Fundamentals](https://learning.postman.com/docs/getting-started/introduction/)
+- [GraphQL vs REST – Apollo Blog](https://www.apollographql.com/blog/graphql-vs-rest/)
+- [6 Common Ways To Build APIs](https://blog.amigoscode.com/p/6-common-ways-to-build-apis)
+- [API Development Roadmap For Developers](https://blog.amigoscode.com/p/api-development-roadmap-for-developers)
+  
